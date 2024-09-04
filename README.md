@@ -10,8 +10,19 @@
 ### 14h – 17h
 
 
-
-
 Objetivo: Demostrar aos participantes as possibilidades do uso do software R na avaliação dos seus
 experimentos, desde o planejamento experimental, passando por avaliações estatisticas, até a 
 construção de gráficos
+
+### Pré-requisitos
+#### Antes do treinamento, instale versões funcionais e mais recentes de:
++	R (Version 4.4.1+): [https://www.r-project.org/	](https://cran.r-project.org/bin/windows/base/)
++  RStudio (Version 2024.04.2+764+) : [https://rstudio.com/products/rstudio/download/](https://posit.co/download/rstudio-desktop/)
++  
+
+|   **Aula**     |     **Tópico**       |    **Código**        |
+| ------------  | ----------------|  ------------- |         
+| Aula 1   | Introdução à experimentação e análise de dados. Funcionalidade do R para análise de dados |    [Code](https://github.com/antonioporto)  |     
+| Aula 2   | Análise linear univariada: análise de variância, regressão e exploração gráfica de resultados  |      [Code](https://github.com/antonioporto)    |
+| Aula 3   | Análise linear univariada fatorial: análise de variância, regressão e exploração gráfica de resultados  |      [Code](https://github.com/antonioporto/)   |
+| Aula 4   | Automatização de análises e produção de relatórios  |      [Code](https://github.com/antonioporto)    |
