@@ -22,7 +22,7 @@ construção de gráficos
 
 |   **Aula**     |     **Tópico**       |    **Código**        |
 | ------------  | ----------------|  ------------- |         
-| Aula 1   | Introdução à experimentação e análise de dados. Funcionalidade do R para análise de dados |    [Code](https://github.com/antonioporto)  |     
+| Aula 1   | Introdução à experimentação e análise de dados. Funcionalidade do R para análise de dados |    [Code]([https://github.com/antonioporto](https://github.com/antonioporto/R_FuturaGene/blob/main/Fun%C3%A7%C3%B5es%20b%C3%A1sicas%20R%20setembro%20de%202024.R))  |     
 | Aula 2   | Análise linear univariada: análise de variância, regressão e exploração gráfica de resultados  |      [Code](https://github.com/antonioporto)    |
 | Aula 3   | Análise linear univariada fatorial: análise de variância, regressão e exploração gráfica de resultados  |      [Code](https://github.com/antonioporto/)   |
 | Aula 4   | Automatização de análises e produção de relatórios  |      [Code](https://github.com/antonioporto)    |
