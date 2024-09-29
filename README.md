@@ -5,10 +5,11 @@
 ### Prelecionistas: Antonio Porto, Anselmo dos Santos e Felipe Ciamponi
 
 
-### Itapetininga - SP
-### 5, 12, 19 e 26 de Setembro de 2024
-### 14h – 17h
+#### Itapetininga - SP
+##### 5, 12, 19 e 26 de Setembro de 2024 | 14h – 17h
 
+#### Jacarei - SP
+##### 3 e 10 de Outubro de 2024 | 8h – 17h
 
 Objetivo: Demostrar aos participantes as possibilidades do uso do software R na avaliação dos seus
 experimentos, desde o planejamento experimental, passando por avaliações estatisticas, até a 
