@@ -1,0 +1,52 @@
+---
+title: "Titulo Aqui"
+author: "Nome Aqui"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+  word_document:
+    reference_docx: template.docx
+fontsize: 10pt
+fontfamily: Arial
+---
+
+# Script em R para Análise Estatística e Visualização do Conjunto de Dados Iris
+
+Este script em R começa configurando o ambiente, carregando as bibliotecas necessárias e o conjunto de dados **Iris**. As principais bibliotecas utilizadas incluem **`ggplot2`** para visualização, **`tidyverse`** para manipulação de dados, **`knitr`** e **`kableExtra`** para formatação de tabelas e **`ggsignif`** para adicionar anotações de significância estatística aos gráficos. Esses pacotes formam a base para a análise estatística, tratamento de dados e visualização neste script. Todo o relatório é realizado através de automatização via [RMarkdown](https://rmarkdown.rstudio.com/), que utiliza a sintaxe padrão do [Markdown](https://www.markdownguide.org/) para gerar belos relatórios a partir de instruções programáticas.
+
+## Geração de Estatísticas Resumidas
+
+A primeira operação realizada é o cálculo de **estatísticas resumidas** para o conjunto de dados Iris. Os dados são agrupados por espécie (`Species`), e para cada uma das quatro características principais (Comprimento da Sépala, Largura da Sépala, Comprimento da Pétala e Largura da Pétala), tanto a **média** quanto o **desvio padrão** são calculados. A média e o desvio padrão são formatados como strings no formato `"mean (+/- std)"`. Isso fornece um resumo rápido dos dados, permitindo que os usuários entendam os valores médios e a variabilidade dessas características principais entre as três espécies: `setosa`, `versicolor` e `virginica`. Esses resultados são apresentados usando **`flextable`** e **`officer`***, pacotes que criam tabelas limpas e formatadas, possuindo diversas opções de customização como linhas listradas, bordas e ajuste de tamanho da fonte para melhorar a legibilidade.
+
+## Análise ANOVA e Teste de Tukey HSD
+
+O script prossegue para realizar uma **análise estatística** no conjunto de dados Iris. Para cada uma das quatro características, um loop itera sobre as colunas do conjunto de dados (Comprimento da Sépala, Largura da Sépala, Comprimento da Pétala e Largura da Pétala). Em cada iteração, um teste de **Análise de Variância (ANOVA)**[^1] é realizado para avaliar se existem diferenças significativas na característica entre as três espécies. O teste ANOVA gera estatísticas como **Soma dos Quadrados**, **Média dos Quadrados**, **Valores de F** e **Valores-p**, que são formatados e armazenados em um dataframe. Os valores-p são convertidos em notação científica para maior clareza, e os resultados numéricos são arredondados para duas casas decimais.
+
+[^1]:Analysis of variance (ANOVA): https://doi.org/10.1016/0169-7439(89)80095-4)
+
+Após a execução da ANOVA, o script realiza um **teste post-hoc de Tukey HSD (Diferença Honesta Significativa)**[^2]. O teste de Tukey identifica quais pares específicos de espécies têm diferenças significativas na característica dada. Os resultados desse teste incluem a diferença das médias entre os pares de espécies, juntamente com os limites inferior e superior dos intervalos de confiança e os valores-p ajustados. Assim como os resultados da ANOVA, os resultados de Tukey são formatados, armazenados e apresentados em uma tabela de resumo usando `kable`. Para cada comparação, o par de espécies sendo comparadas é extraído e armazenado também. Esse processo iterativo constrói tabelas abrangentes de resultados da ANOVA e de Tukey HSD, que são exibidas para interpretação posterior.
+
+[^2]:Multiple comparison test by Tukey's honestly significant difference (HSD): Do the confident level control type I error: https://doi.org/10.22271/maths.2021.v6.i1a.636
+
+## Reformatação dos Dados para Visualização
+
+Com os resultados estatísticos prontos, o script reformata o conjunto de dados **Iris** para visualização. Usando **`pivot_longer`** do pacote **`tidyr`**, os dados são transformados em **formato longo**, onde cada linha representa um par espécie-característica. O formato longo é necessário para a criação dos **boxplots** com **`ggplot2`**, permitindo que o script plote várias características no mesmo gráfico. Esta etapa prepara os dados para a visualização e para a facetagem por característica.
+
+## Cálculo dos Limites Superiores dos Boxplots
+
+Antes da plotagem, o script se prepara para as anotações de significância calculando os **limites superiores** dos boxplots. O limite superior de um boxplot é uma característica chave, normalmente definida como:
+\[ \text{Limite Superior} = Q3 + 1.5 \times IQR \]
+onde \( Q3 \) é o terceiro quartil (percentil 75), e \( IQR \) é o **intervalo interquartil** (a diferença entre o terceiro e o primeiro quartis, \( Q3 - Q1 \)). Uma função personalizada **`get_upper_whisker()`** é definida para calcular o limite superior para cada espécie e característica. Esta função é aplicada a cada par significativo de espécies nos resultados de Tukey HSD, e o maior limite superior entre as duas espécies é utilizado como o **`y_position`** para posicionar a anotação de significância acima dos boxplots.
+
+## Ajuste de Sobreposição de Anotações de Significância
+
+Um dos desafios ao plotar anotações de significância em boxplots é garantir que as anotações não se sobreponham quando várias comparações compartilham os mesmos valores ou valores de `y_position` semelhantes. Para lidar com isso, o script define uma função **`adjust_y_position()`**, que garante que as anotações sobrepostas sejam ajustadas de forma incremental para evitar sobreposição visual. Esta função funciona agrupando as comparações por característica, classificando-as por `y_position` e ajustando a posição adicionando um pequeno incremento sempre que duas anotações consecutivas se sobrepõem. Esta abordagem garante que as anotações de significância sejam dispostas de forma organizada, mesmo quando várias comparações ocorrem dentro da mesma característica.
+
+## Criação do Boxplot com Anotações de Significância
+
+Por fim, o script gera um **boxplot facetado** usando **`ggplot2`**, onde cada faceta representa uma das quatro características (Comprimento da Sépala, Largura da Sépala, Comprimento da Pétala, Largura da Pétala). As espécies são plotadas no eixo x, e os valores das características no eixo y. **`geom_boxplot()`** é usado para criar os boxplots, com cores representando as diferentes espécies. A função **`geom_signif()`** do pacote **`ggsignif`** é usada para sobrepor as anotações de significância nos boxplots. As anotações representam as comparações significativas derivadas do teste de Tukey HSD, com barras conectando as espécies sendo comparadas e os valores-p exibidos acima das barras. A função **`facet_wrap()`** é usada para criar subgráficos separados para cada característica, com escalas livres no eixo y para permitir que cada característica seja visualizada independentemente.
+
+## Conclusão
+
+Este script fornece um fluxo de trabalho completo para realizar análises estatísticas e visualizar os resultados usando o conjunto de dados Iris. Ele calcula estatísticas resumidas, realiza testes ANOVA e Tukey HSD, formata os resultados para apresentação e gera boxplots facetados com anotações de significância. Ao automatizar o processo de ajuste de anotações sobrepostas e calcular posições adequadas para as anotações, o script garante que a visualização final seja tanto informativa quanto esteticamente clara.
